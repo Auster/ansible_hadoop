@@ -2,6 +2,10 @@
 ### Installation
 
 ```sh
+$ git clone https://github.com/Auster/ansible_hadoop.git
+```
+
+```sh
 $ cd ./roles/hadoop/files/
 $ wget http://www.eu.apache.org/dist/hadoop/common/hadoop-2.6.0/hadoop-2.6.0.tar.gz
 ```
