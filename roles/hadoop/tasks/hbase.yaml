@@ -1,0 +1,15 @@
+---
+- name: "Create hbase_home directory"
+  file: path={{ hbase_home }} state=directory
+
+- name: "Check HBase archive file"
+  stat: path=/tmp/hbase-{{ hbase_version }}-bin.tar.gz
+  register: hbase_archive_file
+
+- name: "Check hbase_home exist"
+  stat: path={{ hbase_home_full }}
+  register: hbase_home_full_exist
+
+- name: "Copy HBase installer"
+  copy: src=hbase-{{ hbase_version }}.tar.gz dest=/tmp/hbase-{{ hbase_version }}-bin.tar.gz force={{ hbase_archive_file_force_copy }}
+  when: (hbase_home_full_exist.stat.isdir is not defined) and (hbase_archive_file.stat.exists == False)

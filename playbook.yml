@@ -7,25 +7,13 @@
 #   roles:
 #    - base_role
 
-- name: Install Hadoop dependencies
-  hosts: 
-   - hadoop_master
-   - hadoop_slaves
-
-  remote_user: root 
+- name: Install Hadoop
+  remote_user: root
   sudo: yes
   vars: 
    - java_version_major: 8
    - java_version_minor: 91
    - java_home: "/opt/java"
-#   - java_archive_file_force_copy: 'yes'
-
-  roles:
-   - java
-
-- name: Install Hadoop
-  remote_user: root
-  sudo: yes
   hosts: 
    - hadoop_master
    - hadoop_slaves

@@ -1,10 +1,19 @@
 ---
+####### Hadoop #######
   hadoop_version: '2.6.0'
   hadoop_user: 'hadoop'
   hadoop_home: '/opt/hadoop'
   hadoop_data_dir: '/opt/hadoop/datadir'
   hadoop_name_dir: '/opt/hadoop/namedir'
-
-  hadoop_home_full: '{{ hadoop_home}}/hadoop-{{hadoop_version}}' 
   hadoop_archive_file_force_copy: 'no'
   hadoop_master_as_slave: True
+
+  hadoop_home_full: '{{ hadoop_home}}/hadoop-{{hadoop_version}}' 
+
+####### HBase #########
+  install_hbase: True
+  hbase_version: '1.0.3'
+  hbase_home: /opt/hbase
+  hbase_root_dir: hdfs://localhost:8030/hbase
+  hbase_home_full: '{{ hbase_home}}/hbase-{{hbase_version}}' 
+  hbase_archive_file_force_copy: 'no'

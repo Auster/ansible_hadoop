@@ -7,7 +7,7 @@
   register: hadoop_archive_file
 
 - name: "Check hadoop_home exist"
-  stat: path='{{ hadoop_home_full }}'
+  stat: path={{ hadoop_home_full }}
   register: hadoop_home_full_exist
 
 - name: "Hadoop node type"
@@ -27,10 +27,18 @@
 - name: "Create Hadoop profile (env.)"
   template: src=hadoop_profile.sh dest=/etc/profile.d/hadoop.sh
 
-- template: src=core-site.xml dest={{ hadoop_home_full }}/etc/hadoop/core-site.xml
-- template: src=hdfs-site.xml dest={{ hadoop_home_full }}/etc/hadoop/hdfs-site.xml
-- template: src=yarn-site.xml dest={{ hadoop_home_full }}/etc/hadoop/yarn-site.xml
-- template: src=hadoop-env.sh dest={{ hadoop_home_full }}/etc/hadoop/hadoop-env.sh
+# - template: src=core-site.xml dest={{ hadoop_home_full }}/etc/hadoop/core-site.xml
+# - template: src=hdfs-site.xml dest={{ hadoop_home_full }}/etc/hadoop/hdfs-site.xml
+# - template: src=yarn-site.xml dest={{ hadoop_home_full }}/etc/hadoop/yarn-site.xml
+# - template: src=hadoop-env.sh dest={{ hadoop_home_full }}/etc/hadoop/hadoop-env.sh
+
+- name: "Generate configs"
+  template: src={{ item }} dest={{ hadoop_home_full }}/etc/hadoop/{{ item }}
+  with_items:
+    - core-site.xml
+    - hdfs-site.xml
+    - yarn-site.xml
+    - hadoop-env.sh
 
 - include: master.yaml
   when: hadoop_node_type == "master"
@@ -44,3 +52,7 @@
 
 - name: "Set hosts"
   template: src=hosts dest=/etc/hosts
+
+- name: "Install HBase"
+  include: hbase.yaml
+  when: install_hbase == True
