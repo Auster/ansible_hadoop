@@ -37,6 +37,23 @@ $ start-yarn.sh
 $ yarn jar ~/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.6.0.jar pi 16 10000
 ```
 
+### Run HBase
+```sh
+$ su - hadoop
+$ /opt/hbase/hbase-1.0.3/bin/start-hbase.sh
+```
+
+### Try HBase
+```sh
+$ /opt/hbase/hbase-1.0.3/bin/hbase shell
+> create 'test', 'cf'
+> list 'test'
+> put 'test', 'row1', 'cf:a', 'value1'
+> scan 'test'
+> get 'test', 'row1'
+> drop 'test'
+```
+
 ### Options
 ./playbook.yml
 ```yaml
@@ -59,4 +76,11 @@ $ yarn jar ~/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.6.0.jar pi 16 10
    - hadoop_name_dir: '/opt/hadoop/namedir'
    - hadoop_archive_file_force_copy: 'no'
    - hadoop_master_as_slave: True
+   
+   - install_hbase: True
+   - hbase_version: '1.0.3'
+   - hbase_home: /opt/hbase
+   - hbase_root_dir: "hdfs://HADOOP_MASTER:9000/hbase"
+   - hbase_archive_file_force_copy: 'no'
+   - hbase_zookeeper_data_dir: /opt/hbase/zookeeper/
 ```
