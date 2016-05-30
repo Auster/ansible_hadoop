@@ -12,7 +12,11 @@
 - name: Create name_dir if not exist
   file: path={{ hadoop_name_dir }} state=directory owner={{ hadoop_user }} recurse=yes
 
-- template: src="mapred-site.xml" dest="{{ hadoop_home_full }}/etc/hadoop/mapred-site.xml"
-- template: src="slaves" dest="{{ hadoop_home_full }}/etc/hadoop/slaves"
+# - template: src="mapred-site.xml" dest="{{ hadoop_home_full }}/etc/hadoop/mapred-site.xml"
+# - template: src="slaves" dest="{{ hadoop_home_full }}/etc/hadoop/slaves"
 
-# - include: start.yaml
+- name: "Generate configs"
+  template: src={{ item }} dest={{ hadoop_home_full }}/etc/hadoop/{{ item }}
+  with_items:
+    - slaves
+    - mapred-site.xml
