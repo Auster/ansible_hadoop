@@ -1,0 +1,6 @@
+[hadoop_master]
+test-01 ansible_ssh_host=10.10.10.1
+
+[hadoop_slaves]
+test-02 ansible_ssh_host=10.10.10.2
+test-03 ansible_ssh_host=10.10.10.3

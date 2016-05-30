@@ -1,0 +1,46 @@
+---
+- name: "Create hadoop_home directory"
+  file: path={{ hadoop_home }} state=directory
+
+- name: "Check Hadoop archive file"
+  stat: path=/tmp/hadoop-{{ hadoop_version }}.tar.gz
+  register: hadoop_archive_file
+
+- name: "Check hadoop_home exist"
+  stat: path='{{ hadoop_home_full }}'
+  register: hadoop_home_full_exist
+
+- name: "Hadoop node type"
+  debug: msg={{ hadoop_node_type }}
+
+- name: "Copy hadoop installer"
+  copy: src=hadoop-{{ hadoop_version }}.tar.gz dest=/tmp/hadoop-{{ hadoop_version }}.tar.gz force={{ hadoop_archive_file_force_copy }} 
+  when: (hadoop_home_full_exist.stat.isdir is not defined) and (hadoop_archive_file.stat.exists == False)
+
+- name: "Unpack Hadoop"
+  unarchive: src=/tmp/hadoop-{{ hadoop_version }}.tar.gz dest={{ hadoop_home }} copy=no
+  when: hadoop_home_full_exist.stat.isdir is not defined
+
+- name: "Create user {{ hadoop_user }}"
+  user: name={{ hadoop_user }} home={{ hadoop_home_full }} createhome=yes generate_ssh_key=yes
+
+- name: "Create Hadoop profile (env.)"
+  template: src=hadoop_profile.sh dest=/etc/profile.d/hadoop.sh
+
+- template: src=core-site.xml dest={{ hadoop_home_full }}/etc/hadoop/core-site.xml
+- template: src=hdfs-site.xml dest={{ hadoop_home_full }}/etc/hadoop/hdfs-site.xml
+- template: src=yarn-site.xml dest={{ hadoop_home_full }}/etc/hadoop/yarn-site.xml
+- template: src=hadoop-env.sh dest={{ hadoop_home_full }}/etc/hadoop/hadoop-env.sh
+
+- include: master.yaml
+  when: hadoop_node_type == "master"
+
+- include: slaves.yaml
+  when: hadoop_node_type == "slave" or hadoop_master_as_slave == True 
+
+
+- name: "Set {{ hadoop_user }} as owner"
+  file: path={{ hadoop_home }} owner={{ hadoop_user }} recurse=yes
+
+- name: "Set hosts"
+  template: src=hosts dest=/etc/hosts

@@ -1,0 +1,38 @@
+- name: Check JDK archive file 
+  stat: path=/tmp/jdk-{{ java_version }}-linux-x64.gz
+  register: java_archive_file
+
+- name: Check java_home_full exist
+  stat: path={{ java_home_full }}/bin/java
+  register: java_bin_exist
+
+- name: Copy JDK archive to node
+  copy: src=jdk-{{ java_version }}-linux-x64.gz dest=/tmp/jdk-{{ java_version }}-linux-x64.gz force={{ java_archive_file_force_copy }}
+#  when: (java_archive_file_force_copy == 'yes') or ((java_bin_exist.stat.isreg is not defined) and (java_archive_file.stat.exists == False)) 
+  when: (java_bin_exist.stat.isreg is not defined) and (java_archive_file.stat.exists == False) 
+  
+- name: Ensures java_home dir exists
+  file: path={{ java_home }} state=directory
+
+- name: Unpack JDK
+  unarchive: src=/tmp/jdk-{{ java_version }}-linux-x64.gz dest={{ java_home }} copy=no
+  when: java_bin_exist.stat.isreg is not defined
+
+- name: Correct java version selected
+  alternatives: name={{ item.name }} link={{ item.link }} path={{ item.path }}
+  with_items:
+  - { name: java, link: /usr/bin/java, path: "{{ java_home_full }}/bin/java" }
+  - { name: javac, link: /usr/bin/javac, path: "{{ java_home_full }}/bin/javac" }
+#  - { name: jar, link: /usr/bin/jar, path: "{{ java_home_full }}/bin/jar" }
+#  - { name: jps, link: /usr/bin/jps, path: "{{ java_home_full }}/bin/jps" }
+#  - { name: jmap, link: /usr/bin/jmap, path: "{{ java_home_full }}/bin/jmap" }
+#  - { name: javaws, link: /usr/bin/javaws, path: "{{ java_home_full }}/bin/javaws" }
+#  - { name: jstack, link: /usr/bin/jstack, path: "{{ java_home_full }}/bin/jstack" }
+#  - { name: jvisualvm, link: /usr/bin/jvisualvm, path: "{{ java_home_full }}/bin/jvisualvm" }
+  when: java_bin_exist.stat.isreg is not defined
+
+- name: Create Java profile (env.)
+  template: src=java_profile.sh dest=/etc/profile.d/java.sh
+
+- set_fact: java_home="{{ java_home_full }}"
+  

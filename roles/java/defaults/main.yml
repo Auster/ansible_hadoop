@@ -1,0 +1,7 @@
+---
+  java_version_major: 8
+  java_version_minor: 91
+  java_version: '{{ java_version_major }}u{{ java_version_minor }}'
+  java_home: '/opt/java'
+  java_home_full: '{{ java_home }}/jdk1.{{ java_version_major }}.0_{{ java_version_minor }}'
+  java_archive_file_force_copy: 'no'

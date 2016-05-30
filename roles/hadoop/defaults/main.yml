@@ -1,0 +1,10 @@
+---
+  hadoop_version: '2.6.0'
+  hadoop_user: 'hadoop'
+  hadoop_home: '/opt/hadoop'
+  hadoop_data_dir: '/opt/hadoop/datadir'
+  hadoop_name_dir: '/opt/hadoop/namedir'
+
+  hadoop_home_full: '{{ hadoop_home}}/hadoop-{{hadoop_version}}' 
+  hadoop_archive_file_force_copy: 'no'
+  hadoop_master_as_slave: True

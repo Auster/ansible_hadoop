@@ -1,0 +1,8 @@
+---
+- name: Yum update
+  yum: name=* state=latest
+  sudo: yes
+
+- name: Install or update vim
+  yum: name=vim state=latest
+  sudo: yes

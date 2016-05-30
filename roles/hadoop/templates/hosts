@@ -1,0 +1,7 @@
+{% for host in groups['hadoop_master'] %}
+{{ hostvars[host]['ansible_ssh_host'] }} {{ host }}
+{% endfor %}
+{% for host in groups['hadoop_slaves'] %}
+{{ hostvars[host]['ansible_ssh_host'] }} {{ host }}
+{% endfor %}
+# 127.0.0.1  {{ ansible_fqdn }}
