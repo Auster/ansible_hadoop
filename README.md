@@ -18,11 +18,24 @@ $ curl -LO -H "Cookie: oraclelicense=accept-securebackup-cookie" "http://downloa
 $ vim ./hadoop_nodes.yaml
 ```
 
-### Run
+### Run playbook
 ```sh
 $ ansible-playbook ./playbook.yml -i ./hadoop_nodes.yaml
 ```
 
+### Run Hadoop
+```sh
+$ ssh user@master-node
+$ su - hadoop
+$ hdfs namenode -format
+$ start-dfs.sh
+$ start-yarn.sh
+```
+
+### Try Hadoop
+```sh
+$ yarn jar ~/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.6.0.jar pi 16 10000
+```
 
 ### Options
 ./playbook.yml
