@@ -3,15 +3,9 @@
 
 ```sh
 $ git clone https://github.com/Auster/ansible_hadoop.git
-```
-```sh
+$ cd ./ansible_hadoop
 $ wget http://www.eu.apache.org/dist/hadoop/common/hadoop-2.6.0/hadoop-2.6.0.tar.gz -P ./roles/hadoop/files/
-```
-```sh
 $ wget http://apache-mirror.rbc.ru/pub/apache/hbase/hbase-1.0.3/hbase-1.0.3-bin.tar.gz -P ./roles/hadoop/files/
-```
-
-``` sh
 $ cd ./roles/java/files/
 $ curl -LO -H "Cookie: oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u91-b14/jdk-8u91-linux-x64.tar.gz"
 ```
