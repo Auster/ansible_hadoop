@@ -3,8 +3,8 @@
 
 ```sh
 $ git clone https://github.com/Auster/ansible_hadoop.git
-$ wget http://www.eu.apache.org/dist/hadoop/common/hadoop-2.6.0/hadoop-2.6.0.tar.gz -P ./roles/hadoop/files/
-$ wget http://apache-mirror.rbc.ru/pub/apache/hbase/hbase-1.0.3/hbase-1.0.3-bin.tar.gz -P ./roles/hadoop/files/
+$ wget http://www.eu.apache.org/dist/hadoop/common/hadoop-2.6.0/hadoop-2.6.0.tar.gz -P ./roles/hadoop_base/files/
+$ wget http://apache-mirror.rbc.ru/pub/apache/hbase/hbase-1.0.3/hbase-1.0.3-bin.tar.gz -P ./roles/hbase_base/files/
 $ curl -LO -H "Cookie: oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u91-b14/jdk-8u91-linux-x64.tar.gz"
 ```
 ``` sh
@@ -21,6 +21,7 @@ $ ansible-playbook ./playbook.yml -i ./hadoop_nodes.yaml
 $ ssh user@master-node
 $ su - hadoop
 $ hdfs namenode -format
+$ hdfs dfsadmin -report
 $ start-dfs.sh
 $ start-yarn.sh
 ```
@@ -45,6 +46,8 @@ $ /opt/hbase/hbase-1.0.3/bin/hbase shell
 > scan 'test'
 > get 'test', 'row1'
 > drop 'test'
+Ctrl+D
+$ hadoop fs -ls -R /hbase
 ```
 
 ### Options
@@ -70,7 +73,6 @@ $ /opt/hbase/hbase-1.0.3/bin/hbase shell
    - hadoop_archive_file_force_copy: 'no'
    - hadoop_master_as_slave: True
    
-   - install_hbase: True
    - hbase_version: '1.0.3'
    - hbase_home: /opt/hbase
    - hbase_root_dir: "hdfs://HADOOP_MASTER:9000/hbase"
