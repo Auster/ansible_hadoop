@@ -1,0 +1,1 @@
+export PATH=$PATH:{{ hbase_home_full }}/bin
