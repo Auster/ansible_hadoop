@@ -1,6 +1,15 @@
-[hadoop_master]
+[hadoop_namenodes]
 test-01 ansible_ssh_host=10.10.10.1
 
-[hadoop_slaves]
+[hadoop_datanodes]
+test-01 ansible_ssh_host=10.10.10.1
+test-02 ansible_ssh_host=10.10.10.2
+test-03 ansible_ssh_host=10.10.10.3
+
+[hbase_master]
+test-01 ansible_ssh_host=10.10.10.1
+
+[hbase_regionservers]
+test-01 ansible_ssh_host=10.10.10.1
 test-02 ansible_ssh_host=10.10.10.2
 test-03 ansible_ssh_host=10.10.10.3

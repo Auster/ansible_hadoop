@@ -1,0 +1,2 @@
+---
+  hadoop_home_full: '{{ hadoop_home}}/hadoop-{{hadoop_version}}' 

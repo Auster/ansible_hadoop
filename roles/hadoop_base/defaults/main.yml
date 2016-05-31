@@ -6,5 +6,3 @@
   hadoop_data_dir: '/opt/hadoop/datadir'
   hadoop_name_dir: '/opt/hadoop/namedir'
   hadoop_archive_file_force_copy: 'no'
-
-  hadoop_home_full: '{{ hadoop_home}}/hadoop-{{hadoop_version}}' 

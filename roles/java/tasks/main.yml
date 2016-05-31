@@ -19,7 +19,6 @@
 
 - name: Correct java version selected
   alternatives: name={{ item.name }} link={{ item.link }} path={{ item.path }}
-  when: java_bin_exist.stat.isreg is not defined
   with_items:
   - { name: java, link: /usr/bin/java, path: "{{ java_home_full }}/bin/java" }
   - { name: javac, link: /usr/bin/javac, path: "{{ java_home_full }}/bin/javac" }

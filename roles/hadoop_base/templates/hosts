@@ -1,4 +1,4 @@
-127.0.0.1  {{ ansible_fqdn }}
+# 127.0.0.1  {{ ansible_fqdn }}
 {% for host in groups['hadoop_namenodes'] %}
 {{ hostvars[host]['ansible_ssh_host'] }} {{ host }}
 {% endfor %}

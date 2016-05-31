@@ -1,12 +1,4 @@
 ---
-# - name: Pre-install
-#   hosts: all
-#   remote_user: root
-#   sudo: yes
-#   
-#   roles:
-#    - base_role
-
 - name: Install Hadoop NameNodes
   remote_user: root
   sudo: yes
@@ -40,4 +32,20 @@
    - hadoop_user: hadoop
   roles:
    - hbase_base
+
+- name: add_known_hosts
+  hosts: all
+  remote_user: root
+  sudo: yes
+  tasks:
+    - known_hosts: key="0.0.0.0 ecdsa-sha2-nistp256 {{ hostvars[ansible_fqdn]['ansible_ssh_host_key_ecdsa_public'] }}"
+                   name="0.0.0.0"
+                   path="/etc/ssh/ssh_known_hosts"
+      when: inventory_hostname in groups.hadoop_namenodes
+
+    - known_hosts: key="{{ hostvars[item]['inventory_hostname'] }} ecdsa-sha2-nistp256 {{ hostvars[item]['ansible_ssh_host_key_ecdsa_public'] }}"
+                   name="{{ hostvars[item]['inventory_hostname'] }}"
+                   path="/etc/ssh/ssh_known_hosts"
+      with_items: groups.hadoop_datanodes
+      when: inventory_hostname in groups.hadoop_namenodes
 

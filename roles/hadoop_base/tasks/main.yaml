@@ -27,8 +27,7 @@
 - name: "Create Hadoop profile (env.)"
   template: src=hadoop_profile.sh dest=/etc/profile.d/hadoop.sh
 
-- name: "Generate configs"
-  template: src={{ item }} dest={{ hadoop_home_full }}/etc/hadoop/{{ item }}
+- template: src={{ item }} dest={{ hadoop_home_full }}/etc/hadoop/{{ item }}
   with_items:
     - core-site.xml
     - hdfs-site.xml
@@ -38,5 +37,8 @@
 - name: "Set {{ hadoop_user }} as owner"
   file: path={{ hadoop_home }} owner={{ hadoop_user }} recurse=yes
 
-- name: "Set hosts"
-  template: src=hosts dest=/etc/hosts
+- template: src=hosts dest=/etc/hosts
+
+# TODO: Fix to firewall rules
+- name: Disable firewalld
+  shell: "service firewalld stop && systemctl disable firewalld"
