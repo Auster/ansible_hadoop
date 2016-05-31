@@ -10,12 +10,12 @@
 - name: Install Hadoop
   remote_user: root
   sudo: yes
+  hosts: 
+   - hadoop_master
+   - hadoop_slaves
   vars: 
    - java_version_major: 8
    - java_version_minor: 91
    - java_home: "/opt/java"
-  hosts: 
-   - hadoop_master
-   - hadoop_slaves
   roles:
    - hadoop
