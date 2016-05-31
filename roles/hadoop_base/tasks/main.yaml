@@ -32,6 +32,7 @@
     - core-site.xml
     - hdfs-site.xml
     - yarn-site.xml
+    - mapred-site.xml
     - hadoop-env.sh
 
 - name: "Set {{ hadoop_user }} as owner"
