@@ -7,15 +7,37 @@
 #   roles:
 #    - base_role
 
-- name: Install Hadoop
+- name: Install Hadoop NameNodes
   remote_user: root
   sudo: yes
-  hosts: 
-   - hadoop_master
-   - hadoop_slaves
+  hosts: hadoop_namenodes
   vars: 
    - java_version_major: 8
    - java_version_minor: 91
    - java_home: "/opt/java"
   roles:
-   - hadoop
+   - hadoop_namenode
+
+- name: Install Hadoop DataNodes
+  remote_user: root
+  sudo: yes
+  hosts: hadoop_datanodes
+  vars: 
+   - java_version_major: 8
+   - java_version_minor: 91
+   - java_home: "/opt/java"
+  roles:
+   - hadoop_datanode
+
+- name: Install HBase master
+  remote_user: root
+  sudo: yes
+  hosts: hbase_master:hbase_regionservers
+  vars: 
+   - java_version_major: 8
+   - java_version_minor: 91
+   - java_home: "/opt/java"
+   - hadoop_user: hadoop
+  roles:
+   - hbase_base
+

@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <!--
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,14 +15,9 @@
 -->
 
 <!-- Put site-specific property overrides in this file. -->
-
 <configuration>
- <property>
-   <name>mapred.job.tracker</name>
-   <value>{{  groups['hadoop_master'][0] }}</value>
- </property>  
- <property>
-  <name>mapreduce.framework.name</name>
-   <value>yarn</value> 
- </property>
+<property>
+    <name>fs.defaultFS</name>
+    <value>hdfs://{{ groups['hadoop_namenodes'][0] }}:9000/</value>
+</property>
 </configuration>

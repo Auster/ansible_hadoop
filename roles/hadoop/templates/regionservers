@@ -1,6 +1,0 @@
-{% if hadoop_master_as_slave %}{% for node in groups['hadoop_master'] %}
-{{ node }}
-{% endfor %}{% endif %}
-{% for node in groups['hadoop_slaves'] %}
-{{ node }}
-{% endfor %}

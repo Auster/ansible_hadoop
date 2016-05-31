@@ -25,7 +25,7 @@
 
 # The java implementation to use.  Java 1.7+ required.
 
-export JAVA_HOME={{ java_home }}
+export JAVA_HOME={{ java_home_full }}
 
 # Extra Java CLASSPATH elements.  Optional.
 # export HBASE_CLASSPATH=

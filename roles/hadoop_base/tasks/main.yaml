@@ -27,11 +27,6 @@
 - name: "Create Hadoop profile (env.)"
   template: src=hadoop_profile.sh dest=/etc/profile.d/hadoop.sh
 
-# - template: src=core-site.xml dest={{ hadoop_home_full }}/etc/hadoop/core-site.xml
-# - template: src=hdfs-site.xml dest={{ hadoop_home_full }}/etc/hadoop/hdfs-site.xml
-# - template: src=yarn-site.xml dest={{ hadoop_home_full }}/etc/hadoop/yarn-site.xml
-# - template: src=hadoop-env.sh dest={{ hadoop_home_full }}/etc/hadoop/hadoop-env.sh
-
 - name: "Generate configs"
   template: src={{ item }} dest={{ hadoop_home_full }}/etc/hadoop/{{ item }}
   with_items:
@@ -40,19 +35,8 @@
     - yarn-site.xml
     - hadoop-env.sh
 
-- include: master.yaml
-  when: hadoop_node_type == "master"
-
-- include: slaves.yaml
-  when: hadoop_node_type == "slave" or hadoop_master_as_slave == True 
-
-
 - name: "Set {{ hadoop_user }} as owner"
   file: path={{ hadoop_home }} owner={{ hadoop_user }} recurse=yes
 
 - name: "Set hosts"
   template: src=hosts dest=/etc/hosts
-
-- name: "Install HBase"
-  include: hbase.yaml
-  when: install_hbase == True

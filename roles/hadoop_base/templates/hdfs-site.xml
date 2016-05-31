@@ -15,9 +15,27 @@
 -->
 
 <!-- Put site-specific property overrides in this file. -->
+
 <configuration>
 <property>
-    <name>fs.defaultFS</name>
-    <value>hdfs://{{ groups['hadoop_master'][0] }}:9000/</value>
+  <name>dfs.replication</name>
+  <value>{{  groups['hadoop_datanodes']|length }}</value>
 </property>
+<property>
+  <name>dfs.permissions</name>
+  <value>false</value>
+</property>
+{% if ansible_hostname in groups['hadoop_datanodes']  %}
+<property>
+   <name>dfs.datanode.data.dir</name>
+   <value>{{ hadoop_data_dir }}</value>
+</property>
+{% endif %}
+
+{% if ansible_hostname in groups['hadoop_namenodes'] %}
+<property>
+   <name>dfs.namenode.data.dir</name>
+   <value>{{ hadoop_name_dir }}</value>
+</property>
+{% endif %}
 </configuration>

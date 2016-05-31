@@ -15,12 +15,12 @@
 <configuration>
  <property>
    <name>yarn.resourcemanager.hostname</name>
-   <value>{{ groups['hadoop_master'][0]}}</value>
+   <value>{{ groups['hadoop_namenodes'][0]}}</value>
  </property>
-{% if ansible_hostname in groups['hadoop_master'] %}
+{% if ansible_hostname in groups['hadoop_namenodes'] %}
  <property>
   <name>yarn.nodemanager.hostname</name>
-  <value>{{ groups['hadoop_master'][0]}}</value>
+  <value>{{ groups['hadoop_namenodes'][0]}}</value>
  </property>
 {% endif %}
  <property>

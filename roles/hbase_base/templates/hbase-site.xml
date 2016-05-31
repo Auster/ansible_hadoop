@@ -31,7 +31,7 @@
     </property>
     <property>
         <name>hbase.zookeeper.quorum</name>
-        <value>{% for node in groups['hadoop_master'] %}{{ node }},{% endfor %}{% for node in groups['hadoop_slaves'] %}{{ node }},{% endfor %}</value>
+        <value>{% for node in groups['hbase_regionservers'] %}{{ node }},{% endfor %}</value>
     </property>
     <property>
         <name>hbase.zookeeper.property.dataDir</name>

@@ -2,9 +2,9 @@
 - name: Copy ssh-key from master
   become_user: '{{ hadoop_user }}'
   shell: "cat ~/.ssh/id_rsa.pub"
-  register: ssh_pulic_key_master
+  register: ssh_pulic_key_master_raw
 
-- set_fact: ssh_pulic_key_master="{{ ssh_pulic_key_master.stdout }}" 
+- set_fact: ssh_pulic_key_master={{ ssh_pulic_key_master_raw.stdout }}
 
 - name: Create data_dir if not exist
   file: path={{ hadoop_data_dir }} state=directory owner={{ hadoop_user }} recurse=yes
@@ -12,11 +12,10 @@
 - name: Create name_dir if not exist
   file: path={{ hadoop_name_dir }} state=directory owner={{ hadoop_user }} recurse=yes
 
-# - template: src="mapred-site.xml" dest="{{ hadoop_home_full }}/etc/hadoop/mapred-site.xml"
-# - template: src="slaves" dest="{{ hadoop_home_full }}/etc/hadoop/slaves"
-
 - name: "Generate configs"
-  template: src={{ item }} dest={{ hadoop_home_full }}/etc/hadoop/{{ item }}
+  template: src={{ item }} dest={{ hadoop_home_full }}/etc/hadoop/{{ item }} owner={{ hadoop_user }}
   with_items:
     - slaves
     - mapred-site.xml
+
+# - debug: var=hostvars[inventory_hostname] verbosity=4

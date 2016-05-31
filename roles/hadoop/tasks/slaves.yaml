@@ -1,7 +1,0 @@
----
-- name: Copy hadoop_ssh_key_master to slaves
-#  user: name={{ hadoop_user }} state=present
-  authorized_key: user="{{ hadoop_user }}" key="{{ hostvars[groups['hadoop_master'][0]]['ssh_pulic_key_master'] }}"
-  become_user: '{{ hadoop_user }}'
-
-# - debug: msg={{ hostvars[groups['hadoop_master'][0]]['ssh_pulic_key_master'] }}

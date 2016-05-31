@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <!--
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,25 +17,12 @@
 <!-- Put site-specific property overrides in this file. -->
 
 <configuration>
-<property>
-  <name>dfs.replication</name>
-  <value>{% if hadoop_master_as_slave == True %}{{  groups['hadoop_slaves']|length + groups['hadoop_master']|length }}{% else %}{{ groups['hadoop_slaves']|length  }}{% endif %}</value>
-</property>
-<property>
-  <name>dfs.permissions</name>
-  <value>false</value>
-</property>
-{% if hadoop_master_as_slave == True or ansible_hostname in groups['hadoop_slaves']  %}
-<property>
-   <name>dfs.datanode.data.dir</name>
-   <value>{{ hadoop_data_dir }}</value>
-</property>
-{% endif %}
-
-{% if ansible_hostname in groups['hadoop_master'] %}
-<property>
-   <name>dfs.namenode.data.dir</name>
-   <value>{{ hadoop_name_dir }}</value>
-</property>
-{% endif %}
+ <property>
+   <name>mapred.job.tracker</name>
+   <value>{{  groups['hadoop_namenodes'][0] }}</value>
+ </property>  
+ <property>
+  <name>mapreduce.framework.name</name>
+   <value>yarn</value> 
+ </property>
 </configuration>
