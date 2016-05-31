@@ -16,6 +16,5 @@
   template: src={{ item }} dest={{ hadoop_home_full }}/etc/hadoop/{{ item }} owner={{ hadoop_user }}
   with_items:
     - slaves
-    - mapred-site.xml
 
 # - debug: var=hostvars[inventory_hostname] verbosity=4

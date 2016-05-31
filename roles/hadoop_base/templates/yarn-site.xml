@@ -13,19 +13,31 @@
   limitations under the License. See accompanying LICENSE file.
 -->
 <configuration>
- <property>
-   <name>yarn.resourcemanager.hostname</name>
-   <value>{{ groups['hadoop_namenodes'][0]}}</value>
- </property>
+  <property>
+    <name>yarn.scheduler.minimum-allocation-mb</name>
+    <value>{{ hadoop_yarn_scheduler_minimum_allocation_mb }}</value>
+  </property>
+  <property>
+    <name>yarn.scheduler.maximum-allocation-mb</name>
+    <value>{{ hadoop_yarn_scheduler_maximum_allocation_mb }}</value>
+  </property>
+  <property>
+    <name>yarn.nodemanager.resource.memory-mb</name>
+    <value>{{ hadoop_yarn_nodemanager_resource_memory_mb }}</value>
+  </property>
+  <property>
+    <name>yarn.resourcemanager.hostname</name>
+    <value>{{ groups['hadoop_namenodes'][0]}}</value>
+  </property>
 {% if ansible_hostname in groups['hadoop_namenodes'] %}
- <property>
-  <name>yarn.nodemanager.hostname</name>
-  <value>{{ groups['hadoop_namenodes'][0]}}</value>
- </property>
+  <property>
+    <name>yarn.nodemanager.hostname</name>
+    <value>{{ groups['hadoop_namenodes'][0]}}</value>
+  </property>
 {% endif %}
- <property>
-  <name>yarn.nodemanager.aux-services</name>
-  <value>mapreduce_shuffle</value>
- </property>
+  <property>
+    <name>yarn.nodemanager.aux-services</name>
+    <value>mapreduce_shuffle</value>
+  </property>
 </configuration>
 

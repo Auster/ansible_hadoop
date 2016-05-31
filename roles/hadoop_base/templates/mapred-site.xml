@@ -22,5 +22,42 @@
 <!-- there.  If mapred-site.xml does not already exist, create it.      -->
 
 <configuration>
-
+  <property>
+    <name>mapreduce.map.memory.mb</name>
+    <value>{{ hadoop_mapreduce_map_memory_mb }}</value>
+  </property>
+  <property>
+    <name>mapreduce.map.java.opts</name>
+    <value>{{ hadoop_mapreduce_map_java_opts }}</value>
+  </property>
+  <property>
+    <name>mapreduce.reduce.memory.mb</name>
+    <value>{{ hadoop_mapreduce_reduce_memory_mb }}</value>
+  </property>
+  <property>
+    <name>mapreduce.reduce.java.opts</name>
+    <value>{{ hadoop_mapreduce_reduce_java_opts }}</value>
+  </property>
+  <property>
+    <name>yarn.app.mapreduce.am.resource.mb</name>
+    <value>{{ hadoop_yarn_app_mapreduce_am_resource_mb }}</value>
+  </property>
+  <property>
+    <name>yarn.app.mapreduce.am.command_opts</name>
+    <value>{{ hadoop_yarn_app_mapreduce_am_command_opts }}</value>
+  </property>
+  <property>
+    <name>mapreduce.task.io.sort.mb</name>
+    <value>{{ hadoop_mapreduce_task_io_sort_mb }}</value>
+  </property>
+{% if ansible_hostname in groups['hadoop_namenodes'] %}
+  <property>
+    <name>mapred.job.tracker</name>
+    <value>{{  groups['hadoop_namenodes'][0] }}</value>
+  </property>  
+  <property>
+    <name>mapreduce.framework.name</name>
+    <value>yarn</value> 
+  </property>
+{% endif %}
 </configuration>
