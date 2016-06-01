@@ -13,6 +13,7 @@
   limitations under the License. See accompanying LICENSE file.
 -->
 <configuration>
+  <property>
     <name>yarn.nodemanager.vmem-check-enabled</name>
     <value>{{ hadoop_yarn_nodemanager_vmem_check_enabled }}</value>
   </property>
@@ -59,4 +60,3 @@
     <value>mapreduce_shuffle</value>
   </property>
 </configuration>
-
