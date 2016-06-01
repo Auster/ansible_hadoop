@@ -1,13 +1,17 @@
 ---
 # Using cores=2 memory=6GB disks=1 hbase=True
-hadoop_yarn_scheduler_minimum_allocation_mb: 1024
-hadoop_yarn_scheduler_maximum_allocation_mb: 3072
-hadoop_yarn_nodemanager_resource_memory_mb: 3072
+hadoop_yarn_scheduler_minimum_allocation_mb: 5720
+hadoop_yarn_scheduler_maximum_allocation_mb: "{{ ansible_memtotal_mb - 1024 }}"
+hadoop_yarn_nodemanager_resource_memory_mb: "{{ ansible_memtotal_mb - 1024 }}"
 
-hadoop_mapreduce_map_memory_mb: 512
-hadoop_mapreduce_map_java_opts: '-Xmx409m'
-hadoop_mapreduce_reduce_memory_mb: '1024'
-hadoop_mapreduce_reduce_java_opts: '-Xmx819m' 
-hadoop_yarn_app_mapreduce_am_resource_mb: 512
-hadoop_yarn_app_mapreduce_am_command_opts: '-Xmx409m'
-hadoop_mapreduce_task_io_sort_mb: 204
+hadoop_yarn_nodemanager_vmem_check_enabled: 'false'
+hadoop_yarn_nodemanager_vmem_pmem_ratio: 4
+
+hadoop_mapred_child_java_opts: '-Xmx5120m'
+# hadoop_mapreduce_map_memory_mb: 1024
+# hadoop_mapreduce_map_java_opts: '-Xmx768m'
+# hadoop_mapreduce_reduce_memory_mb: 2048
+# hadoop_mapreduce_reduce_java_opts: '-Xmx1536m' 
+# hadoop_yarn_app_mapreduce_am_resource_mb: 1536
+# hadoop_yarn_app_mapreduce_am_command_opts: '-Xmx768m'
+# hadoop_mapreduce_task_io_sort_mb: 384
